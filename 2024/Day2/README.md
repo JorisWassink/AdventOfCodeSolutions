@@ -1,4 +1,4 @@
-# Day 1
+# Day 2
 
 ## Problem Description
 You are given multiple reports, each a sequence of numeric levels. A report is considered safe if its levels are either strictly increasing or strictly decreasing, and every adjacent difference is between 1 and 3 (inclusive).
