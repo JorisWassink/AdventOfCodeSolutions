@@ -20,7 +20,8 @@ namespace Day5Solution
         public static void solution(string path)
         {
             var rules = new HashSet<Vector2>();
-            int total = 0;
+            var totalCorrectUpdateMiddles = 0;
+            var totalIncorrectUpdateMiddles = 0;
             var sr = new StreamReader(path);
             while (sr.EndOfStream == false)
             {
@@ -34,20 +35,48 @@ namespace Day5Solution
                     if (IsSafe(intList, rules))
                     {
                         var middle = intList[intList.Count / 2];
-                        Console.WriteLine(middle);
-                        total += middle;
+                        totalCorrectUpdateMiddles += middle;
+                    }
+                    else
+                    {
+                        var sortedUpdate = SortUpdate(intList, rules);
+                        var middle = sortedUpdate[sortedUpdate.Count / 2];
+                        totalIncorrectUpdateMiddles += middle;
                     }
                 }
             }
 
-            Console.WriteLine(total);
+            Console.WriteLine($"Solution Part 1: {totalCorrectUpdateMiddles}, Solution Part 2: {totalIncorrectUpdateMiddles}");
         }
 
+        
+        private static List<int> SortUpdate(List<int> updates, HashSet<Vector2> rules)
+        {
+            //imma bubble sort this :D
+            while (true)
+            {
+                var hasSwapped = false;
+                for (int i = 0; i < updates.Count - 1; i++)
+                {
+                    var pair = new Vector2(updates[i + 1], updates[i]);
+                    if (ShouldSwap(pair, rules))
+                    {
+                        //swap em
+                        (updates[i], updates[i + 1]) = (updates[i + 1], updates[i]);
+                        hasSwapped = true;
+                    }
+                }
+                if (!hasSwapped)
+                    break;
+            }
+            return updates;
+        }
+        
+        
         private static bool IsSafe(List<int> updates, HashSet<Vector2> rules)
         {
             if (updates.Count <= 0) return false;
             
-            Console.WriteLine();
             for (int i = 1; i < updates.Count; i++)
             {
                 var pair = new Vector2(updates[i], updates[i - 1]);
