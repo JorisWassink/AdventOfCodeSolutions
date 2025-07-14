@@ -34,7 +34,7 @@ namespace Day3Solution
 
         private static int CalculateMultiplications(string input)
         {
-            int totalValue = 0;
+            var totalValue = 0;
             var matches = GetGoodData(input);
             foreach (Match match in matches)
             {
